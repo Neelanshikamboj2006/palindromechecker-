@@ -1,16 +1,22 @@
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class palindromechecker{
     public static void main(String[] args) {
-        String word = "madam";
+        String word = "level";
         Stack<Character> stack = new Stack<>();
+        Queue<Character> queue = new LinkedList<>();
         for (int i = 0; i < word.length(); i++) {
-            stack.push(word.charAt(i));
+            char ch = word.charAt(i);
+            stack.push(ch);
+            queue.add(ch);
         }
         boolean isPalindrome = true;
-        for (int i = 0; i < word.length(); i++) {
-            char poppedChar = stack.pop();
-            if (word.charAt(i) != poppedChar) {
+        while (!stack.isEmpty()) {
+            char fromStack = stack.pop();
+            char fromQueue = queue.remove();
+            if (fromStack != fromQueue) {
                 isPalindrome = false;
                 break;
             }
