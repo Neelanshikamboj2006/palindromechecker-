@@ -1,14 +1,22 @@
-public class palindromechecker {
+public class palindromechecker{
     public static void main(String[] args) {
-        String original = "level";
-        String reversed = "";
-        for (int i = original.length() - 1; i >= 0; i--) {
-            reversed = reversed + original.charAt(i);
+        String word = "radar";
+        char[] characters = word.toCharArray();
+        int start = 0;
+        int end = characters.length - 1;
+        boolean isPalindrome = true;
+        while (start < end) {
+            if (characters[start] != characters[end]) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
         }
-        if (original.equals(reversed)) {
-            System.out.println("The given string \"" + original + "\" is a Palindrome.");
+        if (isPalindrome) {
+            System.out.println("The given string \"" + word + "\" is a Palindrome.");
         } else {
-            System.out.println("The given string \"" + original + "\" is NOT a Palindrome.");
+            System.out.println("The given string \"" + word + "\" is NOT a Palindrome.");
         }
     }
 }
