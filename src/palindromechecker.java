@@ -1,20 +1,25 @@
-public class palindromechecker{
-    public static void main(String[] args) {
-        String input = "Never Odd Or Even";
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+
+class PalindromeChecker {
+    public boolean checkPalindrome(String word) {
         int start = 0;
-        int end = normalized.length() - 1;
-        boolean isPalindrome = true;
+        int end = word.length() - 1;
         while (start < end) {
-            if (normalized.charAt(start) != normalized.charAt(end)) {
-                isPalindrome = false;
-                break;
+            if (word.charAt(start) != word.charAt(end)) {
+                return false;
             }
             start++;
             end--;
         }
-        if (isPalindrome) {
-            System.out.println("The given string \"" + input + "\" is a Palindrome (ignoring case and spaces).");
+        return true;
+    }
+}
+public class palindromechecker {
+    public static void main(String[] args) {
+        String input = "level";
+        PalindromeChecker checker = new PalindromeChecker();
+        boolean result = checker.checkPalindrome(input);
+        if (result) {
+            System.out.println("The given string \"" + input + "\" is a Palindrome.");
         } else {
             System.out.println("The given string \"" + input + "\" is NOT a Palindrome.");
         }
