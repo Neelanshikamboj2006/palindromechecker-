@@ -1,9 +1,19 @@
 import java.util.*;
-interface PalindromeStrategy {
-    boolean checkPalindrome(String word);
-}
-class StackStrategy implements PalindromeStrategy {
-    public boolean checkPalindrome(String word) {
+
+public class palindromechecker{
+    public static boolean twoPointerCheck(String word) {
+        int start = 0;
+        int end = word.length() - 1;
+        while (start < end) {
+            if (word.charAt(start) != word.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
+    public static boolean stackCheck(String word) {
         Stack<Character> stack = new Stack<>();
         for (int i = 0; i < word.length(); i++) {
             stack.push(word.charAt(i));
@@ -15,41 +25,29 @@ class StackStrategy implements PalindromeStrategy {
         }
         return true;
     }
-}
-class DequeStrategy implements PalindromeStrategy {
-
-    public boolean checkPalindrome(String word) {
-        Deque<Character> deque = new ArrayDeque<>();
-        for (int i = 0; i < word.length(); i++) {
-            deque.addLast(word.charAt(i));
-        }
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
-                return false;
-            }
-        }
-        return true;
+    public static boolean recursiveCheck(String word, int start, int end) {
+        if (start >= end) return true;
+        if (word.charAt(start) != word.charAt(end)) return false;
+        return recursiveCheck(word, start + 1, end - 1);
     }
-}
-class PalindromeService {
-    private PalindromeStrategy strategy;
-    public PalindromeService(PalindromeStrategy strategy) {
-        this.strategy = strategy;
-    }
-    public boolean execute(String word) {
-        return strategy.checkPalindrome(word);
-    }
-}
-public class palindromechecker{
     public static void main(String[] args) {
-        String input = "madam";
-        PalindromeStrategy strategy = new StackStrategy();
-        PalindromeService service = new PalindromeService(strategy);
-        boolean result = service.execute(input);
-        if (result) {
-            System.out.println("The given string \"" + input + "\" is a Palindrome.");
-        } else {
-            System.out.println("The given string \"" + input + "\" is NOT a Palindrome.");
-        }
+        String input = "racecar";
+        long startTime = System.nanoTime();
+        boolean result1 = twoPointerCheck(input);
+        long endTime = System.nanoTime();
+        long twoPointerTime = endTime - startTime;
+        startTime = System.nanoTime();
+        boolean result2 = stackCheck(input);
+        endTime = System.nanoTime();
+        long stackTime = endTime - startTime;
+        startTime = System.nanoTime();
+        boolean result3 = recursiveCheck(input, 0, input.length() - 1);
+        endTime = System.nanoTime();
+        long recursiveTime = endTime - startTime;
+        System.out.println("Palindrome Check Results:");
+        System.out.println("-------------------------------------");
+        System.out.println("Two-Pointer Result: " + result1 + " | Time: " + twoPointerTime + " ns");
+        System.out.println("Stack-Based Result: " + result2 + " | Time: " + stackTime + " ns");
+        System.out.println("Recursive Result: " + result3 + " | Time: " + recursiveTime + " ns");
     }
 }
